@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>GreenBite - Food Menu</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: "#12372A",
+            cream: "#F8F4E3",
+            sage: "#436850",
+            gold: "#D6A84F"
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="bg-cream text-forest">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 border-b border-forest/10 bg-cream/95 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+
+      <a href="#" class="text-2xl font-black">
+        Green<span class="text-sage">Bite</span>
+      </a>
+
+      <nav class="hidden gap-7 md:flex">
+        <a href="#menu" class="font-semibold hover:text-sage">
+          Menu
+        </a>
+
+        <a href="#about" class="font-semibold hover:text-sage">
+          About
+        </a>
+      </nav>
+
+      <button
+        id="scrollMenuBtn"
+        class="rounded-full bg-forest px-5 py-2.5 text-sm font-bold text-cream hover:bg-sage"
+      >
+        View Menu
+      </button>
+
+    </div>
+  </header>
+
+
+  <!-- Hero -->
+  <section
+    class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 md:grid-cols-2 md:py-20"
+  >
+
+    <div>
+
+      <p
+        class="mb-3 inline-block rounded-full bg-forest/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-sage"
+      >
+        Fresh • Tasty • Simple
+      </p>
+
+      <h1 class="max-w-xl text-5xl font-black leading-tight md:text-6xl">
+        Discover your next
+        <span class="text-sage">
+          favorite meal.
+        </span>
+      </h1>
+
+      <p class="mt-5 max-w-lg text-base leading-7 text-forest/70 md:text-lg">
+        Explore delicious meals from around the world.
+        Search, filter and find something tasty for today.
+      </p>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+
+        <button
+          id="heroMenuBtn"
+          class="rounded-full bg-forest px-6 py-3 font-bold text-cream hover:bg-sage"
+        >
+          Explore Menu
+        </button>
+
+        <button
+          id="randomBtn"
+          class="rounded-full border-2 border-forest px-6 py-3 font-bold hover:bg-forest hover:text-cream"
+        >
+          🎲 Random Meal
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Hero Image -->
+    <div class="relative mx-auto w-full max-w-md">
+
+      <div class="absolute -inset-4 rounded-[2.5rem] bg-sage/10 blur-2xl"></div>
+
+      <div class="relative overflow-hidden rounded-[2.5rem] border border-forest/10 bg-white p-3 shadow-2xl">
+
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85"
+          alt="Food"
+          class="h-[390px] w-full rounded-[2rem] object-cover"
+        />
+
+        <div
+          class="absolute bottom-7 left-7 right-7 rounded-2xl bg-cream/95 p-4 shadow-lg"
+        >
+          <p class="text-xs font-bold uppercase tracking-widest text-sage">
+            Today's mood
+          </p>
+
+          <div class="mt-1 flex items-center justify-between">
+
+            <h3 class="text-lg font-black">
+              Good food, good mood.
+            </h3>
+
+            <span class="text-xl">
+              🥗
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Menu -->
+  <section id="menu" class="bg-white/50 py-14">
+
+    <div class="mx-auto max-w-7xl px-5">
+
+      <div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+
+        <div>
+
+          <p class="text-sm font-bold uppercase tracking-widest text-sage">
+            Our Menu
+          </p>
+
+          <h2 class="mt-1 text-3xl font-black md:text-4xl">
+            Find something delicious
+          </h2>
+
+        </div>
+
+
+        <!-- Search -->
+        <div class="relative w-full md:w-80">
+
+          <span
+            class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2"
+          >
+            🔎
+          </span>
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search meals..."
+            class="w-full rounded-2xl border border-forest/15 bg-cream py-3 pl-11 pr-4 outline-none focus:border-sage"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- Categories -->
+      <div
+        id="categories"
+        class="mt-7 flex gap-2 overflow-x-auto pb-2"
+      ></div>
+
+
+      <!-- Loading -->
+      <div id="status" class="py-12 text-center">
+
+        <div
+          class="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-forest/15 border-t-sage"
+        ></div>
+
+        <p class="mt-3 font-semibold text-forest/60">
+          Loading delicious meals...
+        </p>
+
+      </div>
+
+
+      <!-- Food Cards -->
+      <div
+        id="mealGrid"
+        class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      ></div>
+
+
+      <!-- Empty -->
+      <div id="emptyState" class="hidden py-14 text-center">
+
+        <div class="text-5xl">
+          🍽️
+        </div>
+
+        <h3 class="mt-4 text-xl font-black">
+          No meals found
+        </h3>
+
+        <p class="mt-2 text-forest/60">
+          Try another search or category.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- About -->
+  <section id="about" class="mx-auto max-w-7xl px-5 py-16">
+
+    <div class="rounded-[2rem] bg-forest p-8 text-cream md:p-12">
+
+      <p class="text-sm font-bold uppercase tracking-widest text-cream/60">
+        About GreenBite
+      </p>
+
+      <h2 class="mt-2 max-w-2xl text-3xl font-black md:text-4xl">
+        Simple UI. Real API data. Delicious results.
+      </h2>
+
+      <p class="mt-4 max-w-2xl leading-7 text-cream/70">
+        This project fetches data from a public food API
+        and displays it in a responsive grid.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="border-t border-forest/10 px-5 py-7 text-center text-sm text-forest/60">
+
+    © 2026 GreenBite • Built with Tailwind CSS & JavaScript
+
+  </footer>
+
+
+  <script src="./script.js"></script>
+
+</body>
+</html>
